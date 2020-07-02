@@ -1,0 +1,25 @@
+{
+  "name": "emrada",
+  "version": "1.0.0",
+  "description": "",
+  "main": "emrada_server.js",
+  "scripts": {
+    "dev": "nodemon emrada_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "create-react-app": "^3.4.1",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "express-jwt": "^6.0.0",
+    "graphql": "^15.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.4",
+    "sequelize": "^6.2.0"
+  }
+}
