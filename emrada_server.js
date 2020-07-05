@@ -34,7 +34,11 @@ class User extends Sequelize.Model {
 }
 
 User.init(
-  { login: Sequelize.STRING, password: Sequelize.STRING },
+  {
+    email: Sequelize.STRING,
+    password: Sequelize.STRING,
+    nickname: Sequelize.STRING,
+  },
   { sequelize, modelName: "user" }
 );
 
@@ -73,93 +77,93 @@ app.listen(3333, () => console.log("The server started on port 3333"));
 
 // (async () => {
 //   let persone =
-//     User.findOne({ where: { login: "David" } }) ||
-//     (await User.create({ login: "David55", password: "12345" }));
+//     // User.findOne({ where: { login: "David" } }) ||
+//     (await User.create({ email: "asjhdkaj@hjh.jsd", password: "12345", nickname: "Hkdsl" }));
 // })();
 
 sequelize.sync();
 
-const config = {
-  secret: `google`,
-};
+// const config = {
+//   secret: `google`,
+// };
 
-// function jwtWare() {
-//   // const { secret } = config;
-//   return expressJwt( config.secret ).unless({
-//     path: ["/users/authenticate"],
-//   });
+// // function jwtWare() {
+// //   // const { secret } = config;
+// //   return expressJwt( config.secret ).unless({
+// //     path: ["/users/authenticate"],
+// //   });
+// // }
+
+// function errorHandler(err, req, res, next) {
+//   if (typeof err === "string") {
+//     return res.status(400).json({ message: err });
+//   }
+
+//   if (err.name === "UnauthorizedError") {
+//     return res.status(401).json({ message: "Invalid Token" });
+//   }
+
+//   return res.status(500).json({ message: err.message });
 // }
 
-function errorHandler(err, req, res, next) {
-  if (typeof err === "string") {
-    return res.status(400).json({ message: err });
-  }
+// // const users = User.findOne();
 
-  if (err.name === "UnauthorizedError") {
-    return res.status(401).json({ message: "Invalid Token" });
-  }
+// const authenticate = async ({ login, password }) => {
+//   console.log(login, password);
+//   const user = await User.findOne({
+//     where: {
+//       login: login,
+//       password: password,
+//     },
+//   });
+//   console.log(user);
+//   if (user) {
+//     const token = jwt.sign({ sub: user.id }, config.secret);
+//     const { password, ...userWithoutPassword } = user;
+//     return {
+//       ...userWithoutPassword,
+//       token,
+//     };
+//   }
+// };
 
-  return res.status(500).json({ message: err.message });
-}
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cors());
 
-// const users = User.findOne();
-
-const authenticate = async ({ login, password }) => {
-  console.log(login, password);
-  const user = await User.findOne({
-    where: {
-      login: login,
-      password: password,
-    },
-  });
-  console.log(user);
-  if (user) {
-    const token = jwt.sign({ sub: user.id }, config.secret);
-    const { password, ...userWithoutPassword } = user;
-    return {
-      ...userWithoutPassword,
-      token,
-    };
-  }
-};
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
-
-app.post("/users/authenticate", async (req, res, next) => {
-  authenticate(req.body)
-    .then((user) =>
-      user
-        ? res.json(user)
-        : res.status(400).json({ message: "Username or password is incorrect" })
-    )
-    .catch((err) => next(err));
-});
-
-// app.use(jwtWare());
-
-// app.get("/a", (req, res, next) => {
-//   // res.send("hello")
-//   console.log(req.headers.authorization);
-//   res.json({ all: "ok" });
-//   // next();
+// app.post("/users/authenticate", async (req, res, next) => {
+//   authenticate(req.body)
+//     .then((user) =>
+//       user
+//         ? res.json(user)
+//         : res.status(400).json({ message: "Username or password is incorrect" })
+//     )
+//     .catch((err) => next(err));
 // });
 
-// app.get("/a", (req, res, next) => {
-//   console.log(req.headers.authorization);
-//   // const token =
-//   //   req.headers.authorization &&
-//   //   req.headers.authorization.slice("Bearer ".length);
-//   // if (token) {
-//   //   const data = jwt.verify(token, config.secret);
-//   //   if (data) {
-//   //     res.end(`<h1>Hello ${data.sub.login}</h1>`);
-//   //   } else {
-//   //     res.end(`<h1>Hello haker</h1>`);
-//   //   }
-//   // } else {
-//   //   res.end(`<h1>Hello</h1>`);
-//   // }
-// });
+// // app.use(jwtWare());
 
-app.use(errorHandler);
+// // app.get("/a", (req, res, next) => {
+// //   // res.send("hello")
+// //   console.log(req.headers.authorization);
+// //   res.json({ all: "ok" });
+// //   // next();
+// // });
+
+// // app.get("/a", (req, res, next) => {
+// //   console.log(req.headers.authorization);
+// //   // const token =
+// //   //   req.headers.authorization &&
+// //   //   req.headers.authorization.slice("Bearer ".length);
+// //   // if (token) {
+// //   //   const data = jwt.verify(token, config.secret);
+// //   //   if (data) {
+// //   //     res.end(`<h1>Hello ${data.sub.login}</h1>`);
+// //   //   } else {
+// //   //     res.end(`<h1>Hello haker</h1>`);
+// //   //   }
+// //   // } else {
+// //   //   res.end(`<h1>Hello</h1>`);
+// //   // }
+// // });
+
+// app.use(errorHandler);
